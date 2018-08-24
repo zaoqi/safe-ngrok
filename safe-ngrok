@@ -1,0 +1,14 @@
+#!/bin/sh
+d=/tmp/nGROk
+source=$PWD/unsafe-ngrok
+token=$(cat $PWD/token)
+exec=$d/mAIn
+chmod 511 $source
+mkdir -p $d
+chmod 777 $d
+[ -f $exec ] || cp $source $exec
+run(){
+	sudo -s -u nobody HOME=$d $exec "$@"
+}
+run authtoken $token
+run "$@"
